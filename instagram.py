@@ -1,4 +1,6 @@
+# - *- coding: utf- 8 - *-
 from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
 from time import sleep
 import os # check path existence
 from bs4 import BeautifulSoup
@@ -15,8 +17,9 @@ class App:
         self.path = path
         self.error = False
         self.all_images = []
-        self.driver = webdriver.Edge()
+        # self.driver = webdriver.Edge()
         # self.driver = webdriver.Chrome('D:/chromedriver.exe')
+        self.driver = webdriver.Chrome('/home/weilan/Documents/jessieu/instagram-scrapper/chromedriver')
         self.main_url = 'https://www.instagram.com'
         self.driver.get(self.main_url)
         sleep(3)
@@ -130,8 +133,10 @@ class App:
 
     def open_target_profile (self):
         try:
+            # short hint that describes the expected value of a search field - it's reliable than using class or id
             search_bar = self.driver.find_element_by_xpath("//input[@placeholder='Search']")
             search_bar.send_keys(self.target_username)
+            # can be improved by clicking the search results
             target_profile_url = self.main_url + '/' + self.target_username + '/'
             self.driver.get(target_profile_url)
             sleep(3)
@@ -158,9 +163,11 @@ class App:
                 user_password_input = self.driver.find_element_by_xpath("//input[@name='password']")
                 user_password_input.send_keys(self.password)
 
-                # click the login button - either one will work since they are in the same form
+                # click the login button - can also use user_password_input
                 user_name_input.submit()
-                # user_password_input.submit()
+                # alternative in case of suspicious activities detected by Chrome
+                # submit = self.driver.find_element_by_tag_name('form')
+                # submit.submit()
             except Exception as e:
                 print(e)
                 print("Error occurred in finding the field of username/password")

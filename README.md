@@ -10,6 +10,14 @@ Technologies used:
 - Selenium WebDriver
 - BeautifulSoup
 
+### How to use it?
+
+```
+
+```
+
+
+
 ### Challenges
 
 - Cannot scroll down 
